@@ -4,6 +4,7 @@ import { TraderModule } from "./trader/trader.module";
 import { FollowingModule } from "./following/following.module";
 import { OrderModule } from "./order/order.module";
 import { UserModule } from "./user/user.module";
+import { BinanceModuleModule } from "./BinanceModule/binancemodule.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -28,6 +29,7 @@ import { AuthModule } from "./auth/auth.module";
     FollowingModule,
     OrderModule,
     UserModule,
+    BinanceModuleModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,
