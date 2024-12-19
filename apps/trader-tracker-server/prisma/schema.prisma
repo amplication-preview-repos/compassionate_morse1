@@ -1,0 +1,72 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Position {
+  amount       Float?
+  createdAt    DateTime               @default(now())
+  currentPrice Float?
+  entryPrice   Float?
+  id           String                 @id @default(cuid())
+  orders       Order[]
+  trader       Trader?                @relation(fields: [traderId], references: [id])
+  traderId     String?
+  typeField    EnumPositionTypeField?
+  updatedAt    DateTime               @updatedAt
+}
+
+model Trader {
+  createdAt  DateTime    @default(now())
+  followings Following[]
+  id         String      @id @default(cuid())
+  name       String?
+  positions  Position[]
+  score      Float?
+  traderId   String?
+  updatedAt  DateTime    @updatedAt
+}
+
+model Following {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  trader    Trader?  @relation(fields: [traderId], references: [id])
+  traderId  String?
+  updatedAt DateTime @updatedAt
+  userId    String?
+}
+
+model Order {
+  amount     Float?
+  createdAt  DateTime            @default(now())
+  id         String              @id @default(cuid())
+  position   Position?           @relation(fields: [positionId], references: [id])
+  positionId String?
+  price      Float?
+  typeField  EnumOrderTypeField?
+  updatedAt  DateTime            @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+enum EnumPositionTypeField {
+  Option1
+}
+
+enum EnumOrderTypeField {
+  Option1
+}
